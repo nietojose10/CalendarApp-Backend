@@ -141,19 +141,19 @@ const eliminarEvento = async ( req, res = response ) => {
     const eventoId  = req.params.id;
 
     const uid = req.uid;
-
+    console.log(`Evento ID:${ eventoId }`);
     try {
 
-        const evento = await Evento.findById( eventoId );
-
-        if ( !evento ) {
+        const eventoSelected = await Evento.findById( eventoId );
+        console.log(`Evento Selected:${ eventoSelected }`);
+        if ( !eventoSelected ) {
             return res.status(404).json({
                 ok: false,
                 msg: 'Evento no existe por ese id'
             });
         }
 
-        if ( evento.user.toString() !== uid ) {
+        if ( eventoSelected.user.toString() !== uid ) {
 
             return res.status(401).json({
                 ok: false,
@@ -162,8 +162,8 @@ const eliminarEvento = async ( req, res = response ) => {
 
         }
         
-        const eventoEliminado = await Evento.findOneAndRemove( eventoId );
-
+        const eventoEliminado = await Evento.findOneAndDelete( { _id: eventoId } );
+        console.log(`EventoEliminado: ${ eventoEliminado }`);
         res.status(201).json({
             ok: true,
             eventoEliminado
