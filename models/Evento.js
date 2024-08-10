@@ -44,6 +44,7 @@ const EventoSchema = Schema({
 });
 
 EventoSchema.method('toJSON', function(){
+    //Este proceso se hace para reemplazar el _id por id y eliminar __v completamente
     //Traduccion: Declaramos las constantes __v y _id y mandamos lo que resta del objeto con el operador spread
     // luego declaramos que object.id sera igual a _id
     //luego devolvemos el nuevo objeto
