@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors')
 const { dbConnection } = require('./database/config');
+const path = require('path');
 
 
 //Crear el servidor de express
@@ -25,6 +26,10 @@ app.use( express.json() );
 app.use( '/api/auth', require('./routes/auth') );
 app.use( '/api/events', require('./routes/events') );
 
+//Cualquier ruta que no vaya a las rutas definidas que tengamos se ira al index.html;
+app.use('*', ( req, res ) => {
+    res.sendFile( path.join(__dirname, 'public/index.html'));
+})
 
 
 // TODO: CRUD: Eventos
